@@ -4,6 +4,7 @@
 # Вася: 1
 # Маша: 2
 # Петя: 2
+from collections import Counter
 
 students = [
     {'first_name': 'Вася'},
@@ -12,7 +13,10 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
+names = []
+for student in students:
+    names.append(student['first_name'])
+print(Counter(names))
 
 
 # Задание 2
@@ -26,7 +30,11 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+names = []
+for student in students:
+    names.append(student['first_name'])
+max_name = max(Counter(names), key = Counter(names).get)
+print(f'Самое частое имя среди учеников: {max_name}')
 
 
 # Задание 3
@@ -51,8 +59,14 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
-
+group_num = 0
+for group in school_students:
+    group_num += 1
+    names = []
+    for student in group:
+        names.append(student['first_name'])
+    max_name = max(Counter(names), key = Counter(names).get)
+    print(f'Самое частое имя в классе {group_num}: {max_name}')
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -72,8 +86,17 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
-
+for school_class in school:
+    class_name = school_class['class']
+    f_num = 0
+    m_num = 0
+    students = school_class['students']
+    for student in students:
+        if is_male.get(student['first_name']) == False:
+            f_num += 1
+        else:
+            m_num += 1
+    print(f'Класс {class_name}: девочки {f_num}, мальчики {m_num}')
 
 # Задание 5
 # По информации о учениках разных классов нужно найти класс, в котором больше всего девочек и больше всего мальчиков
@@ -92,4 +115,17 @@ is_male = {
     'Миша': True,
 }
 # ???
-
+for school_class in school:
+    class_name = school_class['class']
+    f_num = 0
+    m_num = 0
+    students = school_class['students']
+    for student in students:
+        if is_male.get(student['first_name']) == False:
+            f_num += 1
+        else:
+            m_num += 1
+    school_class['male'] = m_num
+    school_class['female'] = f_num
+print(f'Больше всего мальчиков в классе {max(school, key = lambda x: x['male'])['class']}')
+print(f'Больше всего девочек в классе {max(school, key = lambda x: x['female'])['class']}')
